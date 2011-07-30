@@ -32,7 +32,7 @@ public class Settings {
             conf.load();
             plugin.setConfiguration(conf);
         } else {
-            plugin.log.warn("Something is wrong.");
+            plugin.getLogger().warn("Something is wrong.");
         }
         tmp = makeConfig(new File(dataFolder, "items.yml"));
         if (tmp.exists()) {
@@ -40,7 +40,7 @@ public class Settings {
             conf.load();
             CommandSuite.ITEMS = conf;
         } else {
-            plugin.log.warn("Something is wrong.");
+            plugin.getLogger().warn("Something is wrong.");
         }
         List<String> locs = plugin.getConfiguration().getStringList("plugin.available_locales", new ArrayList<String>());
         for (String key : locs) {
@@ -51,7 +51,7 @@ public class Settings {
                     plugin.setDefaultLocale(key);
                 }
             } else {
-                plugin.log.warn(tmp.getName() + " doesn't exist: removing it from locale list");
+                plugin.getLogger().warn(tmp.getName() + " doesn't exist: removing it from locale list");
                 locs.remove(key);
                 plugin.getConfiguration().setProperty("plugin.available_locales", locs);
                 plugin.getConfiguration().save();
@@ -72,19 +72,19 @@ public class Settings {
                     while ((length = in.read(buffer)) > 0) {
                         out.write(buffer, 0, length);
                     }
-                    plugin.log.info(file.getName() + " created successfully.");
+                    plugin.getLogger().info(file.getName() + " created successfully.");
                 } catch (IOException e) {
-                    plugin.log.warn("Error creating file " + file.getName() + ": " + e);
+                    plugin.getLogger().severe("Error creating file " + file.getName() + ": " + e);
                 } finally {
                     try {
                         in.close();
                         out.close();
                     } catch (IOException e) {
-                        plugin.log.warn("Error closing stream: " + e);
+                        plugin.getLogger().severe("Error closing stream: " + e);
                     }
                 }
             } else {
-               plugin.log.warn("Can't find resource " + file.getName() + "... aborting.");
+               plugin.getLogger().severe("Can't find resource " + file.getName() + "... aborting.");
             }
         }
         return file;

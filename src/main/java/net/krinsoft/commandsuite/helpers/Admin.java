@@ -1,6 +1,7 @@
 package net.krinsoft.commandsuite.helpers;
 
 import net.krinsoft.commandsuite.CommandSuite;
+import net.krinsoft.commandsuite.util.Messages;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -15,7 +16,7 @@ import org.bukkit.entity.Player;
 public class Admin {
 
 	public static boolean time(CommandSender sender, String[] args) {
-		if (sender.hasPermission("commandsuite.admin.time")) {
+		if (sender.hasPermission("commandsuite.admins.time")) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender;
 				if (args.length == 0) {
@@ -23,27 +24,19 @@ public class Admin {
 					player.getServer().broadcastMessage(ChatColor.GREEN + "Time set to 0 on " + ChatColor.AQUA + player.getWorld().getName());
 					return true;
 				} else if (args.length >= 1) {
-					if (args[0].equalsIgnoreCase("set")) {
-						int time = 0;
-						if (args.length == 2) {
-							try {
-								time = Integer.parseInt(args[1]);
-							} catch (NumberFormatException e) {
-								time = 0;
-							}
+					int time = 0;
+					if (args.length == 2) {
+						try {
+							time = Integer.parseInt(args[1]);
+						} catch (NumberFormatException e) {
+							time = 0;
 						}
+					}
+					if (args[0].equalsIgnoreCase("set")) {
 						player.getWorld().setTime(time);
 						player.getServer().broadcastMessage(ChatColor.GREEN + "Time set to " + ChatColor.AQUA + time + ChatColor.GREEN + " on " + ChatColor.AQUA + player.getWorld().getName());
 						return true;
 					} else if (args[0].equalsIgnoreCase("add")) {
-						int time = 0;
-						if (args.length == 2) {
-							try {
-								time = Integer.parseInt(args[1]);
-							} catch (NumberFormatException e) {
-								time = 0;
-							}
-						}
 						player.getWorld().setTime(player.getWorld().getTime() + time);
 						player.getServer().broadcastMessage(ChatColor.AQUA + "" + time + "" + ChatColor.GREEN + " has been added to the time");
 						return true;
@@ -80,7 +73,7 @@ public class Admin {
 
 	public static boolean kick(CommandSender sender, String[] args) {
 		CommandSuite plugin = (CommandSuite) sender.getServer().getPluginManager().getPlugin("CommandSuite");
-		if (sender.hasPermission("commandsuite.admin.kick") || sender instanceof ConsoleCommandSender) {
+		if (sender.hasPermission("commandsuite.admins.kick") || sender instanceof ConsoleCommandSender) {
 			if (args.length >= 1) {
 				if (sender.getServer().getPlayer(args[0]) != null) {
 					StringBuilder msg = new StringBuilder();
@@ -96,9 +89,8 @@ public class Admin {
 						the = msg.toString();
 						the = the.replaceAll("%n", args[0]);
 					}
-					the = the.replaceAll("&([a-f0-9A-F])", "\u00A7$1");
+					the = Messages.COLOR.matcher(the).replaceAll("\u00A7$1");
 					sender.getServer().getPlayer(args[0]).kickPlayer(the);
-					System.out.println(args[0] + " has been kicked: " + msg);
 					return true;
 				}
 			}
@@ -107,14 +99,14 @@ public class Admin {
 	}
 
 	public static boolean ban(CommandSender sender, String[] args) {
-		if (sender.hasPermission("commandsuite.admin.ban")) {
+		if (sender.hasPermission("commandsuite.admins.ban")) {
 
 		}
 		return false;
 	}
 
 	public static boolean unban(CommandSender sender, String[] args) {
-		if (sender.hasPermission("commandsuite.admin.unban")) {
+		if (sender.hasPermission("commandsuite.admins.unban")) {
 			
 		}
 		return false;

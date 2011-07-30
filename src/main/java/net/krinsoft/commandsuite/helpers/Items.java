@@ -1,10 +1,12 @@
 package net.krinsoft.commandsuite.helpers;
 
 import net.krinsoft.commandsuite.CommandSuite;
+import net.krinsoft.commandsuite.util.Messages;
 import net.krinsoft.commandsuite.util.SimpleMat;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -13,10 +15,24 @@ import org.bukkit.inventory.ItemStack;
  */
 
 public class Items {
+	private static boolean i = false;
 
 	public static String give(CommandSender sender, String[] args) {
 		CommandSuite plugin = (CommandSuite) sender.getServer().getPluginManager().getPlugin("CommandSuite");
-		if (sender.hasPermission("commandsuite.give") || sender instanceof ConsoleCommandSender) {
+		boolean perm = false;
+		String key = "";
+		if (i) {
+			i = false;
+			if (sender.hasPermission("commandsuite.items.item")) {
+				perm = true;
+				key = "commands.item";
+			}
+		}
+		if (sender.hasPermission("commandsuite.items.give") || sender instanceof ConsoleCommandSender) {
+			key = "commands.give";
+			perm = true;
+		}
+		if (perm) {
 			if (args.length >= 2) {
 				if (plugin.getServer().getPlayer(args[0]) != null) {
 					Material mat;
@@ -56,11 +72,11 @@ public class Items {
 					ItemStack item = new ItemStack(mat, amt, (short) data, data);
 					plugin.getServer().getPlayer(args[0]).getInventory().addItem(item);
 					String tmp = item.getType().toString().toLowerCase().replaceAll("_", " ");
-					String msg = plugin.getDefaultLocale().getString("commands.give", "&AGiving %n &B%a %i");
+					String msg = plugin.getDefaultLocale().getString(key, "&AGiving %n &B%a %i");
 					msg = msg.replaceAll("%n", plugin.getServer().getPlayer(args[0]).getName());
 					msg = msg.replaceAll("%a", "" + amt);
 					msg = msg.replaceAll("%i", "" + tmp);
-					msg = msg.replaceAll("&([a-fA-F0-9])", "\u00A7$1");
+					msg = Messages.COLOR.matcher(msg).replaceAll("\u00A7$1");
 					sender.sendMessage(msg);
 					return "success";
 				}
@@ -71,6 +87,18 @@ public class Items {
 			return "permission_denied";
 		}
 		return "generic";
+	}
+
+	public static String item(Player player, String[] args) {
+		i = true;
+		String[] tmp = new String[5];
+		tmp[0] = player.getName();
+		System.arraycopy(args, 0, tmp, 1, args.length);
+		return give((CommandSender) player, tmp);
+	}
+
+	public static String max(Player player) {
+		return "";
 	}
 
 }

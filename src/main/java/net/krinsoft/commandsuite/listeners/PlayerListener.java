@@ -1,8 +1,6 @@
 package net.krinsoft.commandsuite.listeners;
 
 import net.krinsoft.commandsuite.CommandSuite;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;

@@ -1,3 +1,7 @@
+plugin:
+  enabled: "<fullname> Enabled."
+  disabled: "<fullname> Disabled."
+
 # Error messages
 errors:
   player_needed: "&CYou must be a player to access that command."
@@ -17,7 +21,7 @@ admin:
 # Confirmation messages
 commands:
   give: "&AGiving %n &B%a %i"
-
+  item: "&AYou get &B%a %i"
 # Improper usage messages
 usage:
   # ------------------- #

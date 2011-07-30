@@ -1,21 +1,16 @@
 package net.krinsoft.commandsuite.listeners;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import net.krinsoft.commandsuite.CommandSuite;
 import net.krinsoft.commandsuite.helpers.Admin;
 import net.krinsoft.commandsuite.helpers.Items;
-import net.krinsoft.commandsuite.util.SimpleMat;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -60,19 +55,26 @@ public class CommandListener implements CommandExecutor {
 
         // Handler for '/item'
         if (cmd.getName().equalsIgnoreCase("item")) {
-            if (checkPlayer(sender)) {
-                Player player = (Player) sender;
-                if (player.hasPermission("commandsuite.item")) {
-                    plugin.log.info("houston, we have permission");
-                } else {
-                    error(sender, "permission_denied");
+			if (checkPlayer(sender)) {
+				String error = Items.item((Player) sender, args);
+				if (error.equals("success")) {
 					return true;
-                }
-            } else {
-                // CommandSender needs to be a player for '/item'
-                error(sender, "player_needed");
-                return true;
-            }
+				} else if (error.equals("no_such_material")) {
+					error(sender, "no_such_material");
+					return true;
+				} else if (error.equals("permission_denied")) {
+					error(sender, "permission_denied");
+					return true;
+				} else if (error.equals("not_enough_args")) {
+					error(sender, "not_enough_args");
+					usage(sender, "item", label);
+					return true;
+				} else if (error.equals("generic")) {
+					error(sender, "generic");
+					usage(sender, "item", label);
+					return true;
+				}
+			}
             return true;
         }
         

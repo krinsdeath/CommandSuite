@@ -10,19 +10,24 @@ commands:
   give:
     aliases: [g]
     description: Gives items to a player
+    permission: commandsuite.items.give
     usage: /<command> (player) (item[:data]) [amount]
   item:
     aliases: [i]
     description: Gives the sender the specified item(s)
+    permission: commandsuite.items.item
     usage: /<command> (item[:data]) [amount]
   max:
     aliases: [m, more]
     description: Sets the item currently in the sender's hand to the max stack size
+    permission: commandsuite.items.max
     usage: /<command>
   # administrative commands
   # -------------------
   time:
+    aliases: [day]
     description: Sets the time
+    permission: commandsuite.admins.time
     usage: |
       /<command> set [val]    - sets the time to the specified value, or 0
       /<command> add [val]    - adds the specified value to the current time, or 0
@@ -31,65 +36,172 @@ commands:
       /<command> night        - sets it to night
   kick:
     description: Kicks a player from the server
+    permission: commandsuite.admins.kick
     usage: /<command> (player) [reason]
   ban:
     description: Bans a player (and his IP) from the server
+    permission: commandsuite.admins.ban
     usage: |
       /<command> (player) [reason]
   pardon:
     aliases: [unban]
     description: Unbans a player (and his IP) from the server
+    permission: commandsuite.admins.unban
     usage: /<command> (player)
+  say:
+    aliases: [broadcast, bc]
+    description: Broadcasts a message to all players on all worlds
+    permission: commandsuite.admins.say
+    usage: /<command> (message)
   # teleportation commands
   # -------------------
   tp:
     description: Teleports a player to a target player
+    permission: commandsuite.teleport.tp
     usage: /<command> [player] [target]
   tpto:
     description: Teleports the sender to the specified player
+    permission: commandsuite.teleport.tpto
     usage: /<command> (player)
   tphere:
     aliases: [bring, s]
     description: Teleports the specified player to the sender
+    permission: commandsuite.teleport.tphere
     usage: /<command> (player)
   tpall:
     description: Teleports all online players (in the sender's world) to him
+    permission: commandsuite.teleport.tpall
     usage: /<command>
   back:
     description: Teleports the sender to the location prior to their last teleport
+    permission: commandsuite.teleport.back
     usage: /<command>
   rewind:
     description: Teleports the specified player to their last location
+    permission: commandsuite.teleport.rewind
     usage: /<command> (player)
   # miscellaneous commands
   # -------------------
   list:
-    aliases: [who]
     description: Lists online players (and their worlds)
+    permission: commandsuite.basic.list
     usage: /<command>
-  say:
-    aliases: [broadcast, bc]
-    description: Broadcasts a message to all players on all worlds
-    usage: /<command> (message)
+  who:
+    description: Lists the specified player's world and afk status
+    permission: commandsuite.basic.who
+    usage: /<command> (player)
+  where:
+    description: Gets information about the player specified
+    permission: commandsuite.basic.where
+    usage: /<command> (player)
 
 permissions:
-  commandsuite.admin.time:
+  # basic command permissions
+  commandsuite.basic.motd:
+    description: Grants access to '/motd'
+    default: false
+  commandsuite.basic.rules:
+    description: Grants access to '/rules'
+    default: false
+  commandsuite.basic.afk:
+    description: Grants access to '/afk'
+    default: false
+  commandsuite.basic.list:
+    description: Grants access to '/list'
+    default: false
+  commandsuite.basic.who:
+    description: Grants access to the basic version of '/who'
+    default: false
+  commandsuite.basic.*:
+    description: Grants access to all 'basic' nodes
+    default: true
+    children:
+      commandsuite.basic.motd: true
+      commandsuite.basic.rules: true
+      commandsuite.basic.afk: true
+      commandsuite.basic.list: true
+      commandsuite.basic.who: true
+  # item command permissions
+  commandsuite.items.give:
+    description: Grants access to '/give'
+    default: false
+  commandsuite.items.item:
+    description: Grants access to '/item'
+    default: false
+  commandsuite.items.max:
+    description: Grants access to '/max'
+    default: false
+  commandsuite.items.*:
+    description: Grants access to all 'items' nodes
+    default: op
+    children:
+      commandsuite.items.give: true
+      commandsuite.items.item: true
+      commandsuite.items.max: true
+  # admin command permissions
+  commandsuite.admins.time:
     description: Grants access to '/time'
     default: false
-  commandsuite.admin.kick:
+  commandsuite.admins.kick:
     description: Grants access to '/kick'
     default: false
-  commandsuite.admin.ban:
+  commandsuite.admins.ban:
     description: Grants access to '/ban'
     default: false
-  commandsuite.admin.unban:
-    description: Grants access to'/unban'
+  commandsuite.admins.unban:
+    description: Grants access to '/unban'
     default: false
-  commandsuite.admin.*:
+  commandsuite.admins.who:
+    description: Grants access to the admin version of '/who'
+    default: false
+  commandsuite.admins.say:
+    description: Grants access to '/say'
+    default: false
+  commandsuite.admins.*:
     description: Grants access to all 'admin' nodes
     default: op
     children:
-      commandsuite.admin.time: true
-      commandsuite.admin.kick: true
-      commandsuite.admin.ban: true
-      commandsuite.admin.unban: true
+      commandsuite.admins.time: true
+      commandsuite.admins.kick: true
+      commandsuite.admins.ban: true
+      commandsuite.admins.unban: true
+      commandsuite.admins.who: true
+      commandsuite.admins.say: true
+  # teleport command permissions
+  commandsuite.teleport.tp:
+    description: Grants access to '/tp'
+    default: false
+  commandsuite.teleport.tpto:
+    description: Grants access to '/tpto'
+    default: false
+  commandsuite.teleport.tphere:
+    description: Grants access to '/tphere'
+    default: false
+  commandsuite.teleport.tpall:
+    description: Grants access to '/tpall'
+    default: false
+  commandsuite.teleport.back:
+    description: Grants access to '/back'
+    default: false
+  commandsuite.teleport.rewind:
+    description: Grants access to '/rewind'
+    default: false
+  commandsuite.teleport.*:
+    description: Grants access to all 'teleport' nodes
+    default: op
+    children:
+      commandsuite.teleport.tp: true
+      commandsuite.teleport.tpto: true
+      commandsuite.teleport.tphere: true
+      commandsuite.teleport.tpall: true
+      commandsuite.teleport.back: true
+      commandsuite.teleoprt.rewind: true
+  # node templates
+  commandsuite.*:
+    description: Grants access to all commands
+    default: false
+    children:
+      commandsuite.basic.*: true
+      commandsuite.items.*: true
+      commandsuite.admins.*: true
+      commandsuite.teleport.*: true

@@ -26,5 +26,5 @@ Features
 *   Teleportation commands have been expanded, and now include */tp*, */tpto*, */tphere*
     (or */bring*), and */tpall* (or */bringall*)
 *   */list* will now show SomePlayer (WorldName), SomePlayer2 (WorldName2)
-*   */who player* will show the location of the player specified, or your own location
+*   */who player* will show the location of the player specified, or your own location.
     For admins, this will also show their IP address.

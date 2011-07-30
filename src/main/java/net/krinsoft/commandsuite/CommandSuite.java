@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import net.krinsoft.commandsuite.listeners.CommandListener;
 import net.krinsoft.commandsuite.listeners.PlayerListener;
-import net.krinsoft.commandsuite.util.Logger;
+import net.krinsoft.commandsuite.util.CommandLogger;
 import net.krinsoft.commandsuite.util.Settings;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -21,6 +21,8 @@ import org.bukkit.util.config.Configuration;
  */
 
 public class CommandSuite extends JavaPlugin {
+	protected final CommandLogger LOGGER = new CommandLogger();
+
     // private final members
     private final PlayerListener pListener = new PlayerListener(this);
     private final CommandListener cListener = new CommandListener(this);
@@ -35,7 +37,6 @@ public class CommandSuite extends JavaPlugin {
     public PluginDescriptionFile info;
     public PluginManager manager;
     public Settings settings;
-    public Logger log;
 
     // private configurations
     private HashMap<String, Configuration> locales = new HashMap<String, Configuration>();
@@ -46,10 +47,12 @@ public class CommandSuite extends JavaPlugin {
 
     @Override
     public void onEnable() {
+		LOGGER.setParent(this);
         manager = getServer().getPluginManager();
         info = getDescription();
-        log = new Logger(this, getServer().getLogger());
         settings = new Settings(this);
+
+		getLogger().info(getDefaultLocale().getString("plugin.enabled"));
     }
 
     @Override
@@ -128,4 +131,33 @@ public class CommandSuite extends JavaPlugin {
     public Configuration getConfiguration() {
         return config;
     }
+
+	/**
+	 * Gets the logger for this plugin
+	 * @return
+	 * the logger
+	 */
+	public CommandLogger getLogger() {
+		return LOGGER;
+	}
+
+	/**
+	 * Returns plugin information
+	 * @param field
+	 * The field to fetch from plugin.yml
+	 * @return
+	 * the associated information
+	 */
+	public String info(String field) {
+		if (field.equalsIgnoreCase("fullname")) {
+			return info.getFullName();
+		} else if (field.equalsIgnoreCase("name")) {
+			return info.getName();
+		} else if (field.equalsIgnoreCase("version")) {
+			return info.getVersion();
+		} else if (field.equalsIgnoreCase("authors")) {
+			return info.getAuthors().get(0);
+		}
+		return info.getName();
+	}
 }
