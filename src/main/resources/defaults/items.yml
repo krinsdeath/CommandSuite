@@ -1,0 +1,57 @@
+# for damage values, specify a base material and then subkeys underneath it
+# the subkey should have the damage value
+# examples:
+#   step:wood
+#   wool:green
+# The format for this file is as follows
+# name: id
+cobble: 4
+plank: 5
+wood_stair: 53
+cobble_stair: 67
+wool:
+  # _self_ keys evaluate to the ID of the root key
+  # in this case, wool's ID is 35
+  _self_: 35
+  white: 0
+  orange: 1
+  magenta: 2
+  blue: 3
+  yellow: 4
+  lime: 5
+  pink: 6
+  gray: 7
+  light_gray: 8
+  cyan: 9
+  purple: 10
+  blue: 11
+  brown: 12
+  green: 13
+  red: 14
+  black: 15
+dye:
+  _self_: 351
+  black: 0
+  red: 1
+  green: 2
+  brown: 3
+  blue: 4
+  purple: 5
+  cyan: 6
+  light_gray: 7
+  gray: 8
+  pink: 9
+  lime: 10
+  yellow: 11
+  blue: 12
+  magenta: 13
+  orange: 14
+  white: 15
+wood:
+  _self_: 17
+  oak: 0
+  pine: 1
+  birch: 2
+diode: 93
+red_torch: 76
+button: 77

@@ -1,0 +1,12 @@
+plugin:
+  default_locale: 'en_US'
+  available_locales: [en_US]
+  
+motd:
+  - "Welcome to the server!"
+  - "Enjoy your stay, and don't get lost!"
+
+rules:
+  - "1: Be courteous."
+  - "2: Don't beg ops for items."
+  - "3: Have fun!"

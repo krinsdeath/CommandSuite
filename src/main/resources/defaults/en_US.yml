@@ -1,0 +1,52 @@
+# Error messages
+errors:
+  player_needed: "&CYou must be a player to access that command."
+  permission_denied: "&CYou do not have access to that command."
+  not_enough_args: "&CInvalid number of arguments."
+  no_such_material: "&CNo such material exists."
+  nothing_in_hand: "&CYou have nothing in your hands!"
+  generic: "Something went wrong."
+
+# Administrative messages
+admin:
+  # default message for a kick if no reason is provided
+  player_kick: "%n has been kicked."
+  # default message for a ban if no reason is provided
+  player_ban: "%n has been banned."
+
+# Confirmation messages
+commands:
+  give: "&AGiving %n &B%a %i"
+
+# Improper usage messages
+usage:
+  # ------------------- #
+  # ITEM BASED COMMANDS #
+  # ------------------- #
+  give:
+    - ""
+  item:
+    - ""
+  max:
+    - ""
+  # ----------------------- #
+  # ADMINISTRATIVE COMMANDS #
+  # ----------------------- #
+  time:
+    - "&B/<command> set [val]    &F- sets the time to the specified value, or 0"
+    - "&B/<command> add [val]    &F- adds the specified value to the current time, or 0"
+    - "&B/<command> day          &F- sets it to day"
+    - "&B/<command> dusk         &F- sets it to dusk"
+    - "&B/<command> night        &F- sets it to night"
+  ban:
+    - "&B/<command> (player) [-flag,...] [reason]"
+    - "Flags are: "
+    - "&A-a       &F- Bans the &Anick&F and &AIP&F of the user, and then kicks them"
+    - "&A-i       &F- Bans the &AIP&F of the user, and then kicks them"
+    - "&A-n       &F- Bans the &Anick&F of the user, and then kicks them"
+  kick:
+    - "&B/<command> (player) [reason]"
+    - "Kicks the specified player with the reason provided"
+  # ---------------------- #
+  # TELEPORTATION COMMANDS #
+  # ---------------------- #

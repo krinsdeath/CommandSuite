@@ -1,0 +1,95 @@
+name: CommandSuite
+main: net.krinsoft.commandsuite.CommandSuite
+version: ${project.version}
+authors: [krinsdeath]
+depend: []
+
+commands:
+  # item based commands
+  # -------------------
+  give:
+    aliases: [g]
+    description: Gives items to a player
+    usage: /<command> (player) (item[:data]) [amount]
+  item:
+    aliases: [i]
+    description: Gives the sender the specified item(s)
+    usage: /<command> (item[:data]) [amount]
+  max:
+    aliases: [m, more]
+    description: Sets the item currently in the sender's hand to the max stack size
+    usage: /<command>
+  # administrative commands
+  # -------------------
+  time:
+    description: Sets the time
+    usage: |
+      /<command> set [val]    - sets the time to the specified value, or 0
+      /<command> add [val]    - adds the specified value to the current time, or 0
+      /<command> day          - sets it to day
+      /<command> dusk         - sets it to dusk
+      /<command> night        - sets it to night
+  kick:
+    description: Kicks a player from the server
+    usage: /<command> (player) [reason]
+  ban:
+    description: Bans a player (and his IP) from the server
+    usage: |
+      /<command> (player) [reason]
+  pardon:
+    aliases: [unban]
+    description: Unbans a player (and his IP) from the server
+    usage: /<command> (player)
+  # teleportation commands
+  # -------------------
+  tp:
+    description: Teleports a player to a target player
+    usage: /<command> [player] [target]
+  tpto:
+    description: Teleports the sender to the specified player
+    usage: /<command> (player)
+  tphere:
+    aliases: [bring, s]
+    description: Teleports the specified player to the sender
+    usage: /<command> (player)
+  tpall:
+    description: Teleports all online players (in the sender's world) to him
+    usage: /<command>
+  back:
+    description: Teleports the sender to the location prior to their last teleport
+    usage: /<command>
+  rewind:
+    description: Teleports the specified player to their last location
+    usage: /<command> (player)
+  # miscellaneous commands
+  # -------------------
+  list:
+    aliases: [who]
+    description: Lists online players (and their worlds)
+    usage: /<command>
+  say:
+    aliases: [broadcast, bc]
+    description: Broadcasts a message to all players on all worlds
+    usage: /<command> (message)
+
+permissions:
+  commandsuite.admin.time:
+    description: Grants access to '/time'
+    default: false
+  commandsuite.admin.kick:
+    description: Grants access to '/kick'
+    default: false
+  commandsuite.admin.ban:
+    description: Grants access to '/ban'
+    default: false
+  commandsuite.admin.unban:
+    description: Grants access to'/unban'
+    default: false
+  commandsuite.admin.*:
+    description: Grants access to all 'admin' nodes
+    default: op
+    children:
+      commandsuite.admin.time: true
+      commandsuite.admin.kick: true
+      commandsuite.admin.ban: true
+      commandsuite.admin.unban: true
