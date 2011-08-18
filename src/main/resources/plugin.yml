@@ -34,6 +34,16 @@ commands:
       /<command> day          - sets it to day
       /<command> dusk         - sets it to dusk
       /<command> night        - sets it to night
+      /<command> dawn         - sets it to dawn
+  weather:
+    aliases: [storm, rain, snow]
+    description: Changes the weather
+    permission: commandsuite.admins.weather
+    usage: |
+      /weather [type] - Type can be any of rain, snow, storm
+      /snow - Shortcut for /weather snow
+      /rain - Shortcut for /weather rain
+      /storm - Shortcut for /weather storm
   kick:
     description: Kicks a player from the server
     permission: commandsuite.admins.kick
@@ -53,33 +63,6 @@ commands:
     description: Broadcasts a message to all players on all worlds
     permission: commandsuite.admins.say
     usage: /<command> (message)
-  # teleportation commands
-  # -------------------
-  tp:
-    description: Teleports a player to a target player
-    permission: commandsuite.teleport.tp
-    usage: /<command> [player] [target]
-  tpto:
-    description: Teleports the sender to the specified player
-    permission: commandsuite.teleport.tpto
-    usage: /<command> (player)
-  tphere:
-    aliases: [bring, s]
-    description: Teleports the specified player to the sender
-    permission: commandsuite.teleport.tphere
-    usage: /<command> (player)
-  tpall:
-    description: Teleports all online players (in the sender's world) to him
-    permission: commandsuite.teleport.tpall
-    usage: /<command>
-  back:
-    description: Teleports the sender to the location prior to their last teleport
-    permission: commandsuite.teleport.back
-    usage: /<command>
-  rewind:
-    description: Teleports the specified player to their last location
-    permission: commandsuite.teleport.rewind
-    usage: /<command> (player)
   # miscellaneous commands
   # -------------------
   list:
@@ -112,6 +95,9 @@ permissions:
   commandsuite.basic.who:
     description: Grants access to the basic version of '/who'
     default: false
+  commandsuite.basic.where:
+    description: Grants access to '/where'
+    default: false
   commandsuite.basic.*:
     description: Grants access to all 'basic' nodes
     default: true
@@ -121,6 +107,7 @@ permissions:
       commandsuite.basic.afk: true
       commandsuite.basic.list: true
       commandsuite.basic.who: true
+      commandsuite.basic.where: true
   # item command permissions
   commandsuite.items.give:
     description: Grants access to '/give'
@@ -142,6 +129,9 @@ permissions:
   commandsuite.admins.time:
     description: Grants access to '/time'
     default: false
+  commandsuite.admins.weather:
+    description: Grantas access to '/weather'
+    default: false
   commandsuite.admins.kick:
     description: Grants access to '/kick'
     default: false
@@ -162,40 +152,12 @@ permissions:
     default: op
     children:
       commandsuite.admins.time: true
+      commandsuite.admins.weather: true
       commandsuite.admins.kick: true
       commandsuite.admins.ban: true
       commandsuite.admins.unban: true
       commandsuite.admins.who: true
       commandsuite.admins.say: true
-  # teleport command permissions
-  commandsuite.teleport.tp:
-    description: Grants access to '/tp'
-    default: false
-  commandsuite.teleport.tpto:
-    description: Grants access to '/tpto'
-    default: false
-  commandsuite.teleport.tphere:
-    description: Grants access to '/tphere'
-    default: false
-  commandsuite.teleport.tpall:
-    description: Grants access to '/tpall'
-    default: false
-  commandsuite.teleport.back:
-    description: Grants access to '/back'
-    default: false
-  commandsuite.teleport.rewind:
-    description: Grants access to '/rewind'
-    default: false
-  commandsuite.teleport.*:
-    description: Grants access to all 'teleport' nodes
-    default: op
-    children:
-      commandsuite.teleport.tp: true
-      commandsuite.teleport.tpto: true
-      commandsuite.teleport.tphere: true
-      commandsuite.teleport.tpall: true
-      commandsuite.teleport.back: true
-      commandsuite.teleoprt.rewind: true
   # node templates
   commandsuite.*:
     description: Grants access to all commands
@@ -204,4 +166,3 @@ permissions:
       commandsuite.basic.*: true
       commandsuite.items.*: true
       commandsuite.admins.*: true
-      commandsuite.teleport.*: true

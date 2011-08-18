@@ -1,6 +1,7 @@
 package net.krinsoft.commandsuite.listeners;
 
 import net.krinsoft.commandsuite.CommandSuite;
+import net.krinsoft.commandsuite.util.Messages;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -78,7 +79,15 @@ public class PlayerListener extends org.bukkit.event.player.PlayerListener {
 
     @Override
     public void onPlayerJoin(PlayerJoinEvent event) {
-        
+        if (plugin.getUser(event.getPlayer().getName(), "locale") == null) {
+			plugin.newUser(event.getPlayer());
+		}
+		if (Messages.motd) {
+			Messages.showMotd(event.getPlayer());
+		}
+		if (Messages.rules) {
+			Messages.showRules(event.getPlayer());
+		}
     }
 
     @Override

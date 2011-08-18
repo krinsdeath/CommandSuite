@@ -1,6 +1,7 @@
 plugin:
   enabled: "<fullname> Enabled."
   disabled: "<fullname> Disabled."
+  language: "English"
 
 # Error messages
 errors:
@@ -22,6 +23,7 @@ admin:
 commands:
   give: "&AGiving %n &B%a %i"
   item: "&AYou get &B%a %i"
+
 # Improper usage messages
 usage:
   # ------------------- #
@@ -43,11 +45,15 @@ usage:
     - "&B/<command> dusk         &F- sets it to dusk"
     - "&B/<command> night        &F- sets it to night"
   ban:
-    - "&B/<command> (player) [-flag,...] [reason]"
-    - "Flags are: "
-    - "&A-a       &F- Bans the &Anick&F and &AIP&F of the user, and then kicks them"
-    - "&A-i       &F- Bans the &AIP&F of the user, and then kicks them"
-    - "&A-n       &F- Bans the &Anick&F of the user, and then kicks them"
+    - "&B/<command> [-flag,...] (player) [reason]"
+    - "Flags [-ain] are: "
+    - "&A  -a     &F- Bans the &Anick&F and &AIP&F of the user, and then kicks them"
+    - "&A  -i     &F- Bans the &AIP&F of the user, and then kicks them"
+    - "&A  -n     &F- Bans the &Anick&F of the user, and then kicks them"
+    - "flag to -n, if only &bplayer&f is provided"
+  unban:
+    - "&b/<command> (player) [-flag,...] [reason]"
+    - "For a list of flags, type &b/ban&f"
   kick:
     - "&B/<command> (player) [reason]"
     - "Kicks the specified player with the reason provided"

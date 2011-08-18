@@ -80,12 +80,16 @@ public class CommandListener implements CommandExecutor {
         
         // Handler for '/max'
         if (cmd.getName().equalsIgnoreCase("max")) {
-			if (sender.hasPermission("commandsuite.max")) {
+			if (!checkPlayer(sender)) {
+				error(sender, "player_needed");
+				return true;
+			}
+			Player player = (Player) sender;
+			if (player.hasPermission("commandsuite.items.max")) {
 				if (!checkPlayer(sender)) {
 					error(sender, "player_needed");
 					return true;
 				}
-				Player player = (Player) sender;
 				if (player.getItemInHand().getType() != Material.AIR) {
 					player.getItemInHand().setAmount(player.getItemInHand().getMaxStackSize());
 					return true;
@@ -112,12 +116,60 @@ public class CommandListener implements CommandExecutor {
 			}
         }
 
+		// Handler for '/weather'
+		if (cmd.getName().equalsIgnoreCase("weather")) {
+			int duration = 0;
+			if (args.length >= 2) {
+				try {
+					duration = Integer.parseInt(args[1]) * 1200;
+				} catch (NumberFormatException e) {
+					duration = 1200;
+				}
+			} else {
+				duration = 1200;
+			}
+			if (sender.hasPermission("commandsuite.admins.weather")) {
+				if (label.equalsIgnoreCase("rain")) {
+					Admin.weather(sender, "rain", duration);
+					return true;
+				} else if (label.equalsIgnoreCase("storm")) {
+					Admin.weather(sender, "storm", duration);
+					return true;
+				} else if (label.equalsIgnoreCase("snow")) {
+					Admin.weather(sender, "snow", duration);
+					return true;
+				}
+			}
+			if (args.length == 0) {
+				Admin.weather(sender, "status", 0);
+				return true;
+			} else {
+				if (args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("stop")) {
+					Admin.weather(sender, "off", 0);
+					return true;
+				}
+				if (sender.hasPermission("commandsuite.admins.weather")) {
+					if (args[0].equalsIgnoreCase("rain")) {
+						Admin.weather(sender, "rain", duration);
+						return true;
+					} else if (args[0].equalsIgnoreCase("storm")) {
+						Admin.weather(sender, "storm", duration);
+						return true;
+					} else if (args[0].equalsIgnoreCase("snow")) {
+						Admin.weather(sender, "snow", duration);
+						return true;
+					}
+				}
+			}
+		}
+
         // Handler for '/kick'
 		if (cmd.getName().equalsIgnoreCase("kick")) {
 			if (Admin.kick(sender, args)) {
 				return true;
 			} else {
 				usage(sender, "kick", label);
+				return true;
 			}
 		}
 

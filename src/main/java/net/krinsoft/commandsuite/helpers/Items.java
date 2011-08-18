@@ -16,21 +16,28 @@ import org.bukkit.inventory.ItemStack;
 
 public class Items {
 	private static boolean i = false;
+	private static CommandSuite plugin;
+
+	public static void init(CommandSuite aThis) {
+		plugin = aThis;
+	}
 
 	public static String give(CommandSender sender, String[] args) {
 		CommandSuite plugin = (CommandSuite) sender.getServer().getPluginManager().getPlugin("CommandSuite");
 		boolean perm = false;
 		String key = "";
+		if (sender.hasPermission("commandsuite.items.give") || sender instanceof ConsoleCommandSender) {
+			key = "commands.give";
+			perm = true;
+		}
 		if (i) {
 			i = false;
 			if (sender.hasPermission("commandsuite.items.item")) {
 				perm = true;
 				key = "commands.item";
+			} else {
+				perm = false;
 			}
-		}
-		if (sender.hasPermission("commandsuite.items.give") || sender instanceof ConsoleCommandSender) {
-			key = "commands.give";
-			perm = true;
 		}
 		if (perm) {
 			if (args.length >= 2) {
@@ -38,7 +45,7 @@ public class Items {
 					Material mat;
 					byte data;
 					int amt = 1;
-					if (args.length == 3) {
+					if (args.length >= 3) {
 						try {
 							amt = Integer.parseInt(args[2]);
 						} catch (NumberFormatException e) {
@@ -72,12 +79,14 @@ public class Items {
 					ItemStack item = new ItemStack(mat, amt, (short) data, data);
 					plugin.getServer().getPlayer(args[0]).getInventory().addItem(item);
 					String tmp = item.getType().toString().toLowerCase().replaceAll("_", " ");
-					String msg = plugin.getDefaultLocale().getString(key, "&AGiving %n &B%a %i");
-					msg = msg.replaceAll("%n", plugin.getServer().getPlayer(args[0]).getName());
-					msg = msg.replaceAll("%a", "" + amt);
-					msg = msg.replaceAll("%i", "" + tmp);
-					msg = Messages.COLOR.matcher(msg).replaceAll("\u00A7$1");
-					sender.sendMessage(msg);
+					String msg = plugin.getDefaultLocale().getString(key);
+					if (msg != null) {
+						msg = msg.replaceAll("%n", plugin.getServer().getPlayer(args[0]).getName());
+						msg = msg.replaceAll("%a", "" + amt);
+						msg = msg.replaceAll("%i", "" + tmp);
+						msg = Messages.COLOR.matcher(msg).replaceAll("\u00A7$1");
+						sender.sendMessage(msg);
+					}
 					return "success";
 				}
 			} else {

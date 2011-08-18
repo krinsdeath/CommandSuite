@@ -47,7 +47,7 @@ dye:
   magenta: 13
   orange: 14
   white: 15
-wood:
+log:
   _self_: 17
   oak: 0
   pine: 1

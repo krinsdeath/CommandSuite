@@ -1,9 +1,16 @@
 plugin:
   default_locale: 'en_US'
   available_locales: [en_US]
-  
+
+settings:
+  motd: true
+  rules: true
+  chat: true
+
+
 motd:
-  - "Welcome to the server!"
+  - "Running &b<plugin>&f by &b<authors>&f"
+  - "Welcome to the server, &b<name>&f!"
   - "Enjoy your stay, and don't get lost!"
 
 rules:

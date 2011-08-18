@@ -35,14 +35,11 @@ public class CommandLogger {
 	}
 
 	private CommandSuite plugin;
-	private final static Logger LOGGER = Logger.getLogger("Cooldowns");
+	private final static Logger LOGGER = Logger.getLogger("CommandSuite");
 	private static String PREFIX;
 
-	public CommandLogger() {
-	}
-
-	public void setParent(CommandSuite aThis) {
-		plugin = aThis;
+	public CommandLogger(CommandSuite instance) {
+		plugin = instance;
 	}
 
 	/**
@@ -51,6 +48,7 @@ public class CommandLogger {
 	 * the message
 	 */
 	public void info(String msg) {
+		if (msg == null) { msg = "Error; null message detected"; }
 		PREFIX = validate(Level.INFO);
 		msg = PREFIX + msg;
 		msg = parse(msg);
@@ -63,6 +61,7 @@ public class CommandLogger {
 	 * the message
 	 */
 	public void warn(String msg) {
+		if (msg == null) { msg = "Error; null message detected"; }
 		PREFIX = validate(Level.WARN);
 		msg = PREFIX + msg;
 		msg = parse(msg);
@@ -75,10 +74,11 @@ public class CommandLogger {
 	 * the message
 	 */
 	public void severe(String msg) {
+		if (msg == null) { msg = "Error; null message detected"; }
 		PREFIX = validate(Level.SEVERE);
 		msg = PREFIX + msg;
 		msg = parse(msg);
-		LOGGER.warning(msg);
+		LOGGER.severe(msg);
 	}
 
 	/**
