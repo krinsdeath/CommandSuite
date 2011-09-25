@@ -63,7 +63,7 @@ public class PlayerListener extends org.bukkit.event.player.PlayerListener {
                     @Override
                     public void run() {
                         plugin.stopping = true;
-                        plugin.getServer().dispatchCommand(new ConsoleCommandSender(plugin.getServer()), "reload");
+                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "reload");
                     }
                 }, 100);
                 event.setCancelled(true);

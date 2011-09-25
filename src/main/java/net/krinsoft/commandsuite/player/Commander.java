@@ -27,11 +27,15 @@ public class Commander {
 		this.group = plugin.getUser(name, "group");
 	}
 
+    public String getName() {
+        return this.name;
+    }
+
 	public String getLocale() {
-		return locale;
+		return this.locale;
 	}
 
 	public String getGroup() {
-		return group;
+		return this.group;
 	}
 }
